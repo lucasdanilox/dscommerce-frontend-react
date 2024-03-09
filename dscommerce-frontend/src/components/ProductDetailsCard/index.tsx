@@ -6,7 +6,7 @@ type Props = {
   product: ProductDTO;
 }
 
-export default function ProductDetailsCard({product}: Props) {
+export default function ProductDetailsCard({ product }: Props) {
 
   return (
     <div className="dsc-card dsc-mb20">
@@ -20,8 +20,11 @@ export default function ProductDetailsCard({product}: Props) {
           {product.description}
         </p>
         <div className="dsc-category-container">
-          <ProductCategory name_category="Eletrônicos" />
-          <ProductCategory name_category="Computadores" />
+          {
+            product.categories.map(item => (
+              <ProductCategory key={item.id} name_category={item.name} />
+            ))
+          }
         </div>
       </div>
     </div>
