@@ -4,9 +4,9 @@ import ProductDetailsCard from "../../../components/ProductDetailsCard";
 import ButtonInverse from '../../../components/ButtonInverse';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import * as productService from '../../../services/product-service';
 import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product';
-import axios from 'axios';
 
 export default function ProductDetails() {
 
@@ -16,13 +16,11 @@ export default function ProductDetails() {
     const [product, setProduct] = useState<ProductDTO>();
 
     useEffect(() => {
-
-        axios.get(`http://localhost:8080/products/${params.productId}`)
+        productService.findById(Number(params.productId))
             .then(response => {
                 console.log(response.data);
                 setProduct(response.data);
             });
-
     }, []);
 
     return (
@@ -32,13 +30,11 @@ export default function ProductDetails() {
                     product &&
                     <ProductDetailsCard product={product} />
                 }
-
                 <div className="dsc-btn-page-container">
                     <ButtonPrimary text="Comprar" />
                     <Link to="/">
                         <ButtonInverse text="Início" />
                     </Link>
-
                 </div>
             </section>
         </main>
