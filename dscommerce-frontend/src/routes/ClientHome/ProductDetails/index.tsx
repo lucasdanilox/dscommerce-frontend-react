@@ -2,11 +2,11 @@ import './styles.css';
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import ProductDetailsCard from "../../../components/ProductDetailsCard";
 import ButtonInverse from '../../../components/ButtonInverse';
-import * as ProductService from '../../../services/product-service';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product';
+import axios from 'axios';
 
 export default function ProductDetails() {
 
@@ -16,8 +16,13 @@ export default function ProductDetails() {
     const [product, setProduct] = useState<ProductDTO>();
 
     useEffect(() => {
-        const prod = ProductService.findById(Number(params.productId));
-        setProduct(prod);
+
+        axios.get("http://localhost:8080/products/1")
+            .then(response => {
+                console.log(response.data);
+                setProduct(response.data);
+            });
+
     }, []);
 
     return (
